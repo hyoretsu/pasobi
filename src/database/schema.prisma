@@ -1,0 +1,11 @@
+generator kysely {
+    provider = "prisma-kysely"
+    output = "./"
+    fileName = "types.ts"
+	decimalTypeOverride = "number"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+}
