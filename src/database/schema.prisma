@@ -9,3 +9,11 @@ datasource db {
     provider  = "postgresql"
     url       = env("DATABASE_URL")
 }
+
+model Socket {
+    id            String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+	name          String   @db.VarChar(10)
+	launchDate    DateTime
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @default(now())
+}
