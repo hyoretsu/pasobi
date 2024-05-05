@@ -11,6 +11,32 @@ export type Manufacturer = {
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
+export type Processor = {
+    id: Generated<string>;
+    model: string;
+    brand: string;
+    socketId: string;
+    l1Cache: number;
+    l2Cache: number;
+    l3Cache: number;
+    tdp: number;
+    releaseDate: Timestamp;
+    msrp: number;
+    manufacturerId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type ProcessorCoreInfo = {
+    id: Generated<string>;
+    type: string | null;
+    coreCount: number;
+    threadCount: number;
+    baseClock: number;
+    boostClock: number;
+    processorId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
 export type Socket = {
     id: Generated<string>;
     name: string;
@@ -22,5 +48,7 @@ export type Socket = {
 };
 export type DB = {
     Manufacturer: Manufacturer;
+    Processor: Processor;
+    ProcessorCoreInfo: ProcessorCoreInfo;
     Socket: Socket;
 };

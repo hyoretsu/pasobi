@@ -11,18 +11,52 @@ datasource db {
 }
 
 model Manufacturer {
-    id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    name      String   @db.VarChar(50)
-    fullName  String?  @db.VarChar(30)
-    sockets   Socket[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name       String      @db.VarChar(50)
+    fullName   String?     @db.VarChar(30)
+    sockets    Socket[]
+    processors Processor[]
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @default(now())
+}
+
+model Processor {
+    id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    model          String              @db.VarChar(10)
+    brand          String              @db.VarChar(7)
+    socketId       String              @db.Uuid
+    socket         Socket              @relation(fields: [socketId], references: [id])
+    coreInfo       ProcessorCoreInfo[]
+    l1Cache        Int                 @db.SmallInt
+    l2Cache        Int                 @db.SmallInt
+    l3Cache        Int                 @db.SmallInt
+    tdp            Int                 @db.SmallInt
+    releaseDate    DateTime            @db.Date
+    msrp           Int                 @db.SmallInt
+    manufacturerId String              @db.Uuid
+    manufacturer   Manufacturer        @relation(fields: [manufacturerId], references: [id])
+    createdAt      DateTime            @default(now())
+    updatedAt      DateTime            @default(now())
+}
+
+model ProcessorCoreInfo {
+    id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type        String?   @db.Char(1)
+    coreCount   Int       @db.SmallInt
+    threadCount Int       @db.SmallInt
+    baseClock   Decimal   @db.Decimal(3, 1)
+    boostClock  Decimal   @db.Decimal(3, 1)
+    processorId String    @db.Uuid
+    processor   Processor @relation(fields: [processorId], references: [id])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @default(now())
 }
 
 model Socket {
     id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     name          String       @db.VarChar(10)
     alternateName String?      @db.VarChar(10)
+    processors    Processor[]
     launchDate    DateTime
     companyId     String       @db.Uuid
     company       Manufacturer @relation(fields: [companyId], references: [id])
