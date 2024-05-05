@@ -16,7 +16,7 @@ export type Socket = {
     name: string;
     alternateName: string | null;
     launchDate: Timestamp;
-    manufacturerId: string;
+    companyId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
