@@ -57,7 +57,7 @@ model Socket {
     name          String       @db.VarChar(10)
     alternateName String?      @db.VarChar(10)
     processors    Processor[]
-    launchDate    DateTime
+    launchDate    DateTime     @db.Date
     companyId     String       @db.Uuid
     company       Manufacturer @relation(fields: [companyId], references: [id])
     createdAt     DateTime     @default(now())
