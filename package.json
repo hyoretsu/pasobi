@@ -11,6 +11,10 @@
   "prisma": {
     "schema": "src/database/schema.prisma"
   },
+  "dependencies": {
+    "kysely": "^0.27.3",
+    "pg": "^8.11.5"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.7.2",
     "@types/bun": "latest",

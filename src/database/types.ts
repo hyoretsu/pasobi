@@ -7,12 +7,14 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export type Manufacturer = {
     id: Generated<string>;
     name: string;
+    fullName: string | null;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
 export type Socket = {
     id: Generated<string>;
     name: string;
+    alternateName: string | null;
     launchDate: Timestamp;
     manufacturerId: string;
     createdAt: Generated<Timestamp>;
