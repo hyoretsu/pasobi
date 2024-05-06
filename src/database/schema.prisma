@@ -16,8 +16,37 @@ model Manufacturer {
     fullName   String?     @db.VarChar(30)
     sockets    Socket[]
     processors Processor[]
+    mouses     Mouse[]
     createdAt  DateTime    @default(now())
     updatedAt  DateTime    @default(now())
+}
+
+model Mouse {
+    id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    model            String       @db.VarChar(10)
+    sensor           String?      @db.VarChar(8)
+    maxDpi           Int          @db.SmallInt
+    dpiSteps         Int[]        @db.SmallInt
+    variableDpi      Boolean      @default(false)
+    ips              Int?         @db.SmallInt
+    buttons          Int?         @db.SmallInt
+    weight           Int?         @db.SmallInt
+    programmable     Boolean      @default(false)
+    acceleration     Int?         @db.SmallInt
+    wireless         Boolean      @default(false)
+    wirelessType     String?      @db.VarChar(9)
+    polling          Int[]        @default([125]) @db.SmallInt
+    switch           String?      @db.VarChar(20)
+    batteryCapacity  Int?         @db.SmallInt
+    batteryLife      Int[]        @db.SmallInt
+    chargingTime     Int?         @db.SmallInt
+    chargingPort     String?      @db.VarChar(9)
+    wirelessCharging String?      @db.VarChar(38)
+    dimensions       Decimal[]    @db.Decimal(5, 2)
+    manufacturerId   String       @db.Uuid
+    manufacturer     Manufacturer @relation(fields: [manufacturerId], references: [id])
+    createdAt        DateTime     @default(now())
+    updatedAt        DateTime     @default(now())
 }
 
 model Processor {

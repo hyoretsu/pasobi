@@ -11,6 +11,30 @@ export type Manufacturer = {
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
+export type Mouse = {
+    id: Generated<string>;
+    model: string;
+    sensor: string | null;
+    maxDpi: number;
+    dpiSteps: number[];
+    variableDpi: Generated<boolean>;
+    ips: number | null;
+    buttons: number | null;
+    programmable: Generated<boolean>;
+    acceleration: number | null;
+    wireless: Generated<boolean>;
+    wirelessType: string | null;
+    polling: Generated<number[]>;
+    switch: string | null;
+    batteryCapacity: number | null;
+    batteryLife: number | null;
+    chargingTime: number | null;
+    chargingPort: string | null;
+    dimensions: number[];
+    manufacturerId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
 export type Processor = {
     id: Generated<string>;
     model: string;
@@ -64,6 +88,7 @@ export type Socket = {
 };
 export type DB = {
     Manufacturer: Manufacturer;
+    Mouse: Mouse;
     Processor: Processor;
     ProcessorCoreInfo: ProcessorCoreInfo;
     ProcessorUsbInfo: ProcessorUsbInfo;
