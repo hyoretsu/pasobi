@@ -23,13 +23,22 @@ model Manufacturer {
 model Processor {
     id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     model          String              @db.VarChar(10)
+    codename       String?             @db.VarChar(15)
+    architecture   String?             @db.VarChar(10)
     brand          String              @db.VarChar(7)
     socketId       String              @db.Uuid
     socket         Socket              @relation(fields: [socketId], references: [id])
     coreInfo       ProcessorCoreInfo[]
-    l1Cache        Int                 @db.SmallInt
-    l2Cache        Int                 @db.SmallInt
+    l1Cache        Int?                @db.SmallInt
+    l2Cache        Int?                @db.SmallInt
     l3Cache        Int                 @db.SmallInt
+    litography     String              @db.VarChar(15)
+    maxMemory      Int                 @db.SmallInt
+    memoryChannels Int                 @db.SmallInt
+    memorySpeed    Int[]               @db.SmallInt
+    usbPorts       ProcessorUsbInfo[]
+    pcieVersion    String              @default("4.0") @db.VarChar(4)
+    pcieLanes      Int[]               @db.SmallInt
     tdp            Int                 @db.SmallInt
     releaseDate    DateTime            @db.Date
     msrp           Int                 @db.SmallInt
@@ -46,6 +55,16 @@ model ProcessorCoreInfo {
     threadCount Int       @db.SmallInt
     baseClock   Decimal   @db.Decimal(3, 1)
     boostClock  Decimal   @db.Decimal(3, 1)
+    processorId String    @db.Uuid
+    processor   Processor @relation(fields: [processorId], references: [id])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @default(now())
+}
+
+model ProcessorUsbInfo {
+    id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type        String    @db.VarChar(15)
+    amount      Int       @db.SmallInt
     processorId String    @db.Uuid
     processor   Processor @relation(fields: [processorId], references: [id])
     createdAt   DateTime  @default(now())

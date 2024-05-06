@@ -14,11 +14,19 @@ export type Manufacturer = {
 export type Processor = {
     id: Generated<string>;
     model: string;
+    codename: string | null;
+    architecture: string | null;
     brand: string;
     socketId: string;
-    l1Cache: number;
-    l2Cache: number;
+    l1Cache: number | null;
+    l2Cache: number | null;
     l3Cache: number;
+    litography: string;
+    maxMemory: number;
+    memoryChannels: number;
+    memorySpeed: number[];
+    pcieVersion: Generated<string>;
+    pcieLanes: number[];
     tdp: number;
     releaseDate: Timestamp;
     msrp: number;
@@ -37,6 +45,14 @@ export type ProcessorCoreInfo = {
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
+export type ProcessorUsbInfo = {
+    id: Generated<string>;
+    type: string;
+    amount: number;
+    processorId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
 export type Socket = {
     id: Generated<string>;
     name: string;
@@ -50,5 +66,6 @@ export type DB = {
     Manufacturer: Manufacturer;
     Processor: Processor;
     ProcessorCoreInfo: ProcessorCoreInfo;
+    ProcessorUsbInfo: ProcessorUsbInfo;
     Socket: Socket;
 };
