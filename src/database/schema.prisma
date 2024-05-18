@@ -16,9 +16,37 @@ model Manufacturer {
     fullName   String?     @db.VarChar(30)
     sockets    Socket[]
     processors Processor[]
+    memories   Memory[]
     mouses     Mouse[]
     createdAt  DateTime    @default(now())
     updatedAt  DateTime    @default(now())
+}
+
+model Memory {
+    id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    capacity       Int          @db.SmallInt
+    info           MemoryInfo[]
+    generation     String       @db.VarChar(4)
+    type           String       @db.VarChar(6)
+    manufacturerId String       @db.Uuid
+    manufacturer   Manufacturer @relation(fields: [manufacturerId], references: [id])
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @default(now())
+}
+
+model MemoryInfo {
+    id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type      String   @db.VarChar(13)
+    clock     Int      @db.SmallInt
+    tcl       Int?     @db.SmallInt
+    trcd      Int?     @db.SmallInt
+    trp       Int?     @db.SmallInt
+    tras      Int?     @db.SmallInt
+    voltage   Decimal? @db.Decimal(5, 4)
+    memoryId  String   @db.Uuid
+    memory    Memory   @relation(fields: [memoryId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
 }
 
 model Mouse {
