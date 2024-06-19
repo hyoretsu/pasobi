@@ -70,14 +70,14 @@ export type Processor = {
     l2Cache: number | null;
     l3Cache: number;
     litography: string;
-    maxMemory: number;
-    memoryChannels: number;
+    maxMemory: number | null;
+    memoryChannels: Generated<number>;
     memorySpeed: number[];
     pcieVersion: Generated<string>;
     pcieLanes: number[];
     tdp: number;
-    releaseDate: Timestamp;
-    msrp: number;
+    releaseDate: Timestamp | null;
+    msrp: number | null;
     manufacturerId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
@@ -105,7 +105,7 @@ export type Socket = {
     id: Generated<string>;
     name: string;
     alternateName: string | null;
-    launchDate: Timestamp;
+    launchDate: Timestamp | null;
     companyId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;

@@ -78,36 +78,37 @@ model Mouse {
 }
 
 model Processor {
-    id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    model          String              @db.VarChar(10)
-    codename       String?             @db.VarChar(15)
-    architecture   String?             @db.VarChar(10)
-    brand          String              @db.VarChar(7)
-    socketId       String              @db.Uuid
-    socket         Socket              @relation(fields: [socketId], references: [id])
-    coreInfo       ProcessorCoreInfo[]
-    l1Cache        Int?                @db.SmallInt
-    l2Cache        Int?                @db.SmallInt
-    l3Cache        Int                 @db.SmallInt
-    litography     String              @db.VarChar(15)
-    maxMemory      Int                 @db.SmallInt
-    memoryChannels Int                 @db.SmallInt
-    memorySpeed    Int[]               @db.SmallInt
-    usbPorts       ProcessorUsbInfo[]
-    pcieVersion    String              @default("4.0") @db.VarChar(4)
-    pcieLanes      Int[]               @db.SmallInt
-    tdp            Int                 @db.SmallInt
-    releaseDate    DateTime            @db.Date
-    msrp           Int                 @db.SmallInt
-    manufacturerId String              @db.Uuid
-    manufacturer   Manufacturer        @relation(fields: [manufacturerId], references: [id])
-    createdAt      DateTime            @default(now())
-    updatedAt      DateTime            @default(now())
+    id               String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    model            String              @db.VarChar(10)
+    codename         String?             @db.VarChar(17)
+    architecture     String?             @db.VarChar(10)
+    brand            String              @db.VarChar(22)
+    socketId         String              @db.Uuid
+    socket           Socket              @relation(fields: [socketId], references: [id])
+    coreInfo         ProcessorCoreInfo[]
+    l1Cache          Int?                @db.Integer
+    l2Cache          Int?                @db.Integer
+    l3Cache          Int                 @db.Integer
+    litography       String              @db.VarChar(15)
+    maxMemory        Int?                @db.SmallInt
+    memoryChannels   Int                 @default(2) @db.SmallInt
+    memorySpeed      Int[]               @db.SmallInt
+    memoryGeneration String[]            @db.VarChar(4)
+    usbPorts         ProcessorUsbInfo[]
+    pcieVersion      String              @default("4.0") @db.VarChar(4)
+    pcieLanes        Int[]               @db.SmallInt
+    tdp              Int                 @db.SmallInt
+    releaseDate      DateTime?           @db.Date
+    msrp             Int?                @db.SmallInt
+    manufacturerId   String              @db.Uuid
+    manufacturer     Manufacturer        @relation(fields: [manufacturerId], references: [id])
+    createdAt        DateTime            @default(now())
+    updatedAt        DateTime            @default(now())
 }
 
 model ProcessorCoreInfo {
     id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    type        String?   @db.Char(1)
+    type        String?   @db.Char(2)
     coreCount   Int       @db.SmallInt
     threadCount Int       @db.SmallInt
     baseClock   Decimal   @db.Decimal(3, 1)
@@ -133,7 +134,7 @@ model Socket {
     name          String       @db.VarChar(10)
     alternateName String?      @db.VarChar(10)
     processors    Processor[]
-    launchDate    DateTime     @db.Date
+    launchDate    DateTime?    @db.Date
     companyId     String       @db.Uuid
     company       Manufacturer @relation(fields: [companyId], references: [id])
     createdAt     DateTime     @default(now())
