@@ -24,10 +24,13 @@ model Manufacturer {
 
 model Memory {
     id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name           String?      @db.VarChar(30)
+    model          String?      @db.VarChar(20)
     capacity       Int          @db.SmallInt
     info           MemoryInfo[]
     generation     String       @db.VarChar(4)
     type           String       @db.VarChar(6)
+    chip           String?      @db.VarChar(10)
     manufacturerId String       @db.Uuid
     manufacturer   Manufacturer @relation(fields: [manufacturerId], references: [id])
     createdAt      DateTime     @default(now())
@@ -36,7 +39,7 @@ model Memory {
 
 model MemoryInfo {
     id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    type      String   @db.VarChar(13)
+    type      String?  @db.VarChar(13)
     clock     Int      @db.SmallInt
     tcl       Int?     @db.SmallInt
     trcd      Int?     @db.SmallInt
