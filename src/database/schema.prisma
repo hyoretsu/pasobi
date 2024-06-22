@@ -11,15 +11,17 @@ datasource db {
 }
 
 model Manufacturer {
-    id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    name       String      @db.VarChar(50)
-    fullName   String?     @db.VarChar(30)
-    sockets    Socket[]
-    processors Processor[]
-    memories   Memory[]
-    mouses     Mouse[]
-    createdAt  DateTime    @default(now())
-    updatedAt  DateTime    @default(now())
+    id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name            String           @db.VarChar(50)
+    fullName        String?          @db.VarChar(30)
+    memories        Memory[]
+    mouses          Mouse[]
+    processors      Processor[]
+    sockets         Socket[]
+    videoCardModels VideoCardModel[]
+    videoCards      VideoCard[]
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @default(now())
 }
 
 model Memory {
@@ -93,6 +95,7 @@ model Processor {
     l2Cache          Int?                @db.Integer
     l3Cache          Int                 @db.Integer
     litography       String              @db.VarChar(15)
+    gpu              VideoCardModel?
     maxMemory        Int?                @db.SmallInt
     memoryChannels   Int                 @default(2) @db.SmallInt
     memorySpeed      Int[]               @db.SmallInt
@@ -142,4 +145,96 @@ model Socket {
     company       Manufacturer @relation(fields: [companyId], references: [id])
     createdAt     DateTime     @default(now())
     updatedAt     DateTime     @default(now())
+}
+
+model VideoCard {
+    id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    modelId        String         @unique @db.Uuid
+    model          VideoCardModel @relation(fields: [modelId], references: [id])
+    ports          String[]       @db.VarChar(11)
+    manufacturerId String?        @db.Uuid
+    manufacturer   Manufacturer?  @relation(fields: [manufacturerId], references: [id])
+    createdAt      DateTime       @default(now())
+    updatedAt      DateTime       @default(now())
+}
+
+model VideoCardArchitecture {
+    id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name               String           @db.VarChar(12)
+    fabricationProcess String[]         @db.VarChar(12)
+    features           String[]         @db.VarChar
+    launchDate         DateTime?        @db.Date
+    videoCards         VideoCardModel[]
+    createdAt          DateTime         @default(now())
+    updatedAt          DateTime         @default(now())
+}
+
+model VideoCardClock {
+    id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type      String?        @db.VarChar(6) // ["Base", "Boost", "Memory", "Shader"]
+    speed     Int            @db.SmallInt // MHz or MT/s
+    modelId   String         @db.Uuid
+    model     VideoCardModel @relation(fields: [modelId], references: [id])
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @default(now())
+}
+
+model VideoCardCore {
+    id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type      String         @db.VarChar(28) // ["AI accelerators", "Graphics processing clusters", "Pixel pipelines", "Ray accelerators", "Ray tracing cores", "Render output units", "Shader Processors", "Streaming multiprocessors", "Tensor Cores", "Texture mapping units"]
+    amount    Int            @db.SmallInt
+    modelId   String         @db.Uuid
+    model     VideoCardModel @relation(fields: [modelId], references: [id])
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @default(now())
+}
+
+model VideoCardFlops {
+    id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    type      String         @default("Single") @db.VarChar(11) // ["Half", "Single", "Double", "Tensor", "Ray Tracing"]
+    amount    Decimal[]      @db.Decimal(15, 0) // [Base, Boost]
+    modelId   String         @db.Uuid
+    model     VideoCardModel @relation(fields: [modelId], references: [id])
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @default(now())
+}
+
+model VideoCardMemory {
+    id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    size      Decimal        @db.Decimal(11, 0) // Bytes
+    bandwidth Int            @db.Integer // Bytes
+    busType   String         @db.VarChar(6)
+    busWidth  Int            @db.SmallInt // Bit
+    modelId   String         @unique @db.Uuid
+    model     VideoCardModel @relation(fields: [modelId], references: [id])
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @default(now())
+}
+
+model VideoCardModel {
+    id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name            String                @db.VarChar(25)
+    series          String                @db.VarChar(14)
+    codename        String?               @db.VarChar(10)
+    architectureId  String                @db.Uuid
+    architecture    VideoCardArchitecture @relation(fields: [architectureId], references: [id])
+    busInterface    String?               @db.VarChar(16)
+    transistors     Decimal?              @db.Decimal(12, 0) // Bytes // Full number
+    dieSize         Int?                  @db.SmallInt // mm^2
+    computeUnits    Int?                  @db.SmallInt
+    cores           VideoCardCore[]
+    clockSpeeds     VideoCardClock[]
+    memory          VideoCardMemory?
+    flops           VideoCardFlops[]
+    multiGpuSupport Boolean               @default(false)
+    tdp             Int?                  @db.SmallInt
+    launchDate      DateTime?             @db.Date
+    msrp            Json?                 @db.JsonB // { amount: number, currency: string}
+    products        VideoCard[]
+    processorId     String?               @unique @db.Uuid
+    processor       Processor?            @relation(fields: [processorId], references: [id])
+    companyId       String                @db.Uuid
+    company         Manufacturer          @relation(fields: [companyId], references: [id])
+    createdAt       DateTime              @default(now())
+    updatedAt       DateTime              @default(now())
 }
