@@ -9,7 +9,7 @@
 		"start": "cd infra && npm run start"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.7.2",
+		"@biomejs/biome": "^1.8.2",
 		"bun-types": "latest"
 	},
 	"peerDependencies": {

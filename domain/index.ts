@@ -1,1 +1,2 @@
-export * from "./repositories/VideoCard.repository";
+export * from "./dtos";
+export * from "./repositories";

@@ -1,1 +1,1 @@
-export * from "./services/VideoCards";
+export * from "./services";
