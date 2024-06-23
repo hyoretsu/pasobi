@@ -1,4 +1,4 @@
-import type VideoCardsRepository from "@domain/repositories/VideoCard.repository";
+import type { VideoCardsRepository } from "@pasobi/domain";
 import type { Kysely } from "kysely";
 import type { VideoCard, VideoCardModel } from "../entities";
 import type { DB } from "../types";

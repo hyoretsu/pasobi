@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": "src",
 		"emitDecoratorMetadata": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
@@ -8,11 +7,6 @@
 		"lib": ["ES6"],
 		"module": "ES2022",
 		"moduleResolution": "node",
-		"paths": {
-			"@application/*": ["application/*"],
-			"@domain/*": ["domain/*"],
-			"@infra/*": ["infra/*"]
-		},
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ES2021",

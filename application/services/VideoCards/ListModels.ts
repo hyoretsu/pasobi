@@ -1,5 +1,5 @@
-import type { VideoCardModel } from "@infra/sql/kysely/entities";
-import type VideoCardsRepository from "@domain/repositories/VideoCard.repository";
+import type { VideoCardsRepository } from "@pasobi/domain";
+import type { VideoCardModel } from "@pasobi/infra";
 
 export class ListVideoCardModels {
 	constructor(private readonly videoCardsRepository: VideoCardsRepository) {}

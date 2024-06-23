@@ -1,8 +1,7 @@
-import { ListVideoCards } from "@application/services/VideoCards/List.service";
-import { ListVideoCardModels } from "@application/services/VideoCards/ListModels.service";
-import { database } from "@infra/sql/kysely/database";
-import KyselyVideoCardsRepository from "@infra/sql/kysely/repositories/VideoCard.repository";
+import { ListVideoCardModels, ListVideoCards } from "@pasobi/application";
 import Elysia from "elysia";
+import { database } from "~/sql/kysely/database";
+import KyselyVideoCardsRepository from "~/sql/kysely/repositories/VideoCard.repository";
 
 export const VideoCardsController = new Elysia()
 	.decorate({

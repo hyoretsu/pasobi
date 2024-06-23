@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import { VideoCardsController } from "./controllers/VideoCards.controller";
+import { VideoCardsController } from "./controllers/VideoCards";
 
 const app = new Elysia().use(VideoCardsController).listen(process.env.PORT || 3333);
 
