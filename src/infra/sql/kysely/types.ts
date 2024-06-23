@@ -13,16 +13,19 @@ export type Manufacturer = {
 };
 export type Memory = {
     id: Generated<string>;
+    name: string | null;
+    model: string | null;
     capacity: number;
     generation: string;
     type: string;
+    chip: string | null;
     manufacturerId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
 export type MemoryInfo = {
     id: Generated<string>;
-    type: string;
+    type: string | null;
     clock: number;
     tcl: number | null;
     trcd: number | null;
@@ -73,6 +76,7 @@ export type Processor = {
     maxMemory: number | null;
     memoryChannels: Generated<number>;
     memorySpeed: number[];
+    memoryGeneration: string[];
     pcieVersion: Generated<string>;
     pcieLanes: number[];
     tdp: number;
@@ -110,6 +114,76 @@ export type Socket = {
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
 };
+export type VideoCard = {
+    id: Generated<string>;
+    modelId: string;
+    ports: string[];
+    manufacturerId: string | null;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardArchitecture = {
+    id: Generated<string>;
+    name: string;
+    fabricationProcess: string[];
+    features: string[];
+    launchDate: Timestamp | null;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardClock = {
+    id: Generated<string>;
+    type: string | null;
+    speed: number;
+    modelId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardCore = {
+    id: Generated<string>;
+    type: string;
+    amount: number;
+    modelId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardFlops = {
+    id: Generated<string>;
+    type: Generated<string>;
+    amount: number[];
+    modelId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardMemory = {
+    id: Generated<string>;
+    size: number;
+    bandwidth: number;
+    busType: string;
+    busWidth: number;
+    modelId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
+export type VideoCardModel = {
+    id: Generated<string>;
+    name: string;
+    series: string;
+    codename: string | null;
+    architectureId: string;
+    busInterface: string | null;
+    transistors: number;
+    dieSize: number | null;
+    computeUnits: number | null;
+    multiGpuSupport: Generated<boolean>;
+    tdp: number | null;
+    launchDate: Timestamp | null;
+    msrp: unknown | null;
+    processorId: string | null;
+    companyId: string;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Generated<Timestamp>;
+};
 export type DB = {
     Manufacturer: Manufacturer;
     Memory: Memory;
@@ -119,4 +193,11 @@ export type DB = {
     ProcessorCoreInfo: ProcessorCoreInfo;
     ProcessorUsbInfo: ProcessorUsbInfo;
     Socket: Socket;
+    VideoCard: VideoCard;
+    VideoCardArchitecture: VideoCardArchitecture;
+    VideoCardClock: VideoCardClock;
+    VideoCardCore: VideoCardCore;
+    VideoCardFlops: VideoCardFlops;
+    VideoCardMemory: VideoCardMemory;
+    VideoCardModel: VideoCardModel;
 };

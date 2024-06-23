@@ -1,23 +1,28 @@
 {
 	"name": "pasobi",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"prisma:generate": "prisma generate",
+		"build": "bun build src/infra/http/elysia/server.ts",
+		"dev": "bun --watch src/infra/http/elysia/server.ts",
 		"prisma:migrate": "prisma migrate dev --create-only",
 		"prisma:migrate_deploy": "prisma migrate deploy",
 		"prisma:migrate_dev": "prisma migrate dev",
-		"prepare": "prisma generate"
+		"prepare": "prisma generate",
+		"start": "NODE_ENV=production bun src/infra/http/elysia/server.ts"
 	},
 	"prisma": {
-		"schema": "src/database/schema.prisma"
+		"schema": "src/infra/sql/schema.prisma"
 	},
 	"dependencies": {
+		"elysia": "^1.0.25",
 		"kysely": "^0.27.3",
 		"pg": "^8.11.5"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.7.2",
-		"@types/bun": "latest",
+		"@types/pg": "^8.11.6",
+		"bun-types": "latest",
 		"prisma": "^5.15.1",
 		"prisma-kysely": "^1.8.0"
 	},
