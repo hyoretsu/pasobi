@@ -2,5 +2,9 @@
 	"name": "@pasobi/application",
 	"version": "1.0.0",
 	"private": true,
-	"main": "index.ts"
+	"main": "index.ts",
+	"dependencies": {
+		"@pasobi/domain": "workspace:*",
+		"@pasobi/infra": "workspace:*"
+	}
 }
