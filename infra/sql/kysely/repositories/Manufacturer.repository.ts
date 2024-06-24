@@ -6,12 +6,8 @@ import type { DB } from "../types";
 export default class KyselyManufacturersRepository implements ManufacturersRepository {
 	constructor(private readonly db: Kysely<DB>) {}
 
-	public async create(data: ManufacturerCreation): Promise<Manufacturer> {
-		const manufacturer = await this.db
-			.insertInto("Manufacturer")
-			.values(data)
-			.returningAll()
-			.executeTakeFirst();
+	public async create(data: ManufacturerCreation): Promise<Manufacturer[]> {
+		const manufacturer = await this.db.insertInto("Manufacturer").values(data).returningAll().execute();
 
 		return manufacturer;
 	}
