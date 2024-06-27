@@ -172,7 +172,7 @@ export type VideoCardModel = {
     codename: string | null;
     architectureId: string;
     busInterface: string | null;
-    transistors: number;
+    transistors: number | null;
     dieSize: number | null;
     computeUnits: number | null;
     multiGpuSupport: Generated<boolean>;
